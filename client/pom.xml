@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>consulo.internal.vaadin</groupId>
+	<artifactId>arquill.editor</artifactId>
+	<packaging>jar</packaging>
+	<version>1.0-SNAPSHOT</version>
+
+	<properties>
+		<!-- general -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jdk.source>1.8</jdk.source>
+		<jdk.target>1.8</jdk.target>
+		<!-- MANIFEST.MF -->
+		<Implementation-Title>${project.name}</Implementation-Title>
+		<Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
+		<Vaadin-License-Title>Apache License 2.0</Vaadin-License-Title>
+		<Vaadin-Package-Version>1</Vaadin-Package-Version>
+		<Vaadin-Widgetsets>consulo.internal.arquill.editor.Editor</Vaadin-Widgetsets>
+		<!-- com.google -->
+		<com.google.code.maven-license-plugin.maven-license-plugin>1.4.0</com.google.code.maven-license-plugin.maven-license-plugin>
+		<!-- com.vaadin -->
+		<com.vaadin.vaadin>8.12-SNAPSHOT</com.vaadin.vaadin>
+		<!-- javax -->
+		<javax.servlet.servlet-api>2.4</javax.servlet.servlet-api>
+		<javax.validation.validation-api>1.0.0.GA</javax.validation.validation-api>
+		<!-- org.apache -->
+		<org.apache.commons.commons-lang3>3.1</org.apache.commons.commons-lang3>
+		<org.apache.maven.plugins.maven-antrun-plugin>1.7</org.apache.maven.plugins.maven-antrun-plugin>
+		<org.apache.maven.plugins.maven-assembly-plugin>2.3</org.apache.maven.plugins.maven-assembly-plugin>
+		<org.apache.maven.plugins.maven-clean-plugin>2.4.1</org.apache.maven.plugins.maven-clean-plugin>
+		<org.apache.maven.plugins.maven-compiler-plugin>2.3.2</org.apache.maven.plugins.maven-compiler-plugin>
+		<org.apache.maven.plugins.maven-jar-plugin>2.4</org.apache.maven.plugins.maven-jar-plugin>
+		<org.apache.maven.wagon.wagon-ftp>2.2</org.apache.maven.wagon.wagon-ftp>
+		<!-- org.codehaus.mojo -->
+		<org.codehaus.mojo.exec-maven-plugin>1.2.1</org.codehaus.mojo.exec-maven-plugin>
+		<org.codehaus.mojo.gmaven-plugin>1.0</org.codehaus.mojo.gmaven-plugin>
+		<org.codehaus.mojo.properties-maven-plugin>1.0-alpha-2</org.codehaus.mojo.properties-maven-plugin>
+		<org.codehaus.mojo.wagon-maven-plugin>1.0-beta-4</org.codehaus.mojo.wagon-maven-plugin>
+		<!-- org.mortbay.jetty -->
+		<org.mortbay.jetty.maven-jetty-plugin>6.1.26</org.mortbay.jetty.maven-jetty-plugin>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>consulo</id>
+			<url>https://maven.consulo.io/repository/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>interval:60</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>consulo.internal.vaadin</groupId>
+			<artifactId>vaadin-server</artifactId>
+			<version>${com.vaadin.vaadin}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>consulo.internal.vaadin</groupId>
+			<artifactId>vaadin-client-compiled</artifactId>
+			<version>${com.vaadin.vaadin}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>consulo.internal.vaadin</groupId>
+			<artifactId>vaadin-client</artifactId>
+			<version>${com.vaadin.vaadin}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>consulo.internal.vaadin</groupId>
+			<artifactId>vaadin-themes</artifactId>
+			<version>${com.vaadin.vaadin}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>${javax.validation.validation-api}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>${javax.validation.validation-api}</version>
+			<classifier>sources</classifier>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${org.apache.commons.commons-lang3}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>${javax.servlet.servlet-api}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${org.apache.maven.plugins.maven-compiler-plugin}</version>
+				<configuration>
+					<source>${jdk.source}</source>
+					<target>${jdk.target}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.0.2</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.outputDirectory}</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/main/java</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.0.2</version>
+				<configuration>
+					<archive>
+						<index>true</index>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+						</manifest>
+						<manifestEntries>
+							<Vaadin-Package-Version>${Vaadin-Package-Version}</Vaadin-Package-Version>
+							<Vaadin-License-Title>${Vaadin-License-Title}</Vaadin-License-Title>
+							<Vaadin-Widgetsets>${Vaadin-Widgetsets}</Vaadin-Widgetsets>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
