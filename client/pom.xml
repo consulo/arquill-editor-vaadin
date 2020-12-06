@@ -53,6 +53,17 @@
 		</repository>
 	</repositories>
 
+	<pluginRepositories>
+		<pluginRepository>
+			<id>consulo</id>
+			<url>https://maven.consulo.io/repository/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>interval:60</updatePolicy>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>consulo.internal.vaadin</groupId>
