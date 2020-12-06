@@ -1,6 +1,5 @@
 package consulo.internal.arquill.editor.server;
 
-import com.google.gwt.user.client.ui.HasText;
 import com.vaadin.annotations.JavaScript;
 import com.vaadin.annotations.StyleSheet;
 import com.vaadin.ui.AbstractComponent;
@@ -12,7 +11,7 @@ import consulo.internal.arquill.editor.shared.AquillEditorState;
  */
 @JavaScript("js/arquillEditor.js")
 @StyleSheet("js/arquillEditor.css")
-public class ArquillEditor extends AbstractComponent implements HasText
+public class ArquillEditor extends AbstractComponent
 {
 	public ArquillEditor(String text)
 	{
@@ -25,13 +24,11 @@ public class ArquillEditor extends AbstractComponent implements HasText
 		return (AquillEditorState) super.getState();
 	}
 
-	@Override
 	public String getText()
 	{
 		return getState().text;
 	}
 
-	@Override
 	public void setText(String text)
 	{
 		getState().text = text;
