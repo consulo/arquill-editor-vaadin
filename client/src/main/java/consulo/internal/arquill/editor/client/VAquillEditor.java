@@ -1,5 +1,6 @@
 package consulo.internal.arquill.editor.client;
 
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
@@ -17,6 +18,9 @@ public class VAquillEditor extends Widget
 	public VAquillEditor()
 	{
 		Element pre = DOM.createElement("pre");
+		pre.getStyle().setMargin(0, Style.Unit.PX);
+		pre.getStyle().setPadding(0, Style.Unit.PX);
+
 		setElement(pre);
 		myId = DOM.createUniqueId();
 		pre.setId(myId);
