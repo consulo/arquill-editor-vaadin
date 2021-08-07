@@ -14,6 +14,4 @@ public class ArquillEditorState extends AbstractComponentState
 	public String text;
 
 	public Set<String> events = new LinkedHashSet<>();
-
-	public float lineHeight;
 }

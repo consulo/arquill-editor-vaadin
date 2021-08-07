@@ -4,7 +4,9 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 import consulo.internal.arquill.editor.server.ArquillEditor;
 
 import javax.servlet.annotation.WebServlet;
@@ -25,7 +27,11 @@ public class DemoUI extends UI
 		layout.setHeight("100%");
 		layout.setWidth("100%");
 
-		ArquillEditor editor = new ArquillEditor("test");
+		ArquillEditor editor = new ArquillEditor("test 123456");
+		editor.addAttachListener(event -> {
+			editor.setCaretOffset(3);
+		});
+
 		editor.addMouseDownListener(event -> new Notification("MouseDown", "Offset: " + event.getTextOffset()).show(getPage()));
 
 		layout.addComponent(editor);
@@ -35,10 +41,10 @@ public class DemoUI extends UI
 		editor.setWidth("100%");
 		editor.setHeight("100%");
 
-//		Button getLineHeight = new Button("Get Line Height", (e) -> {
-//			new Notification("GetLineHeight", "Line Height: " + editor.getLineHeight()).show(getPage());
-//		});
-//		layout.addComponent(getLineHeight);
+		//		Button getLineHeight = new Button("Get Line Height", (e) -> {
+		//			new Notification("GetLineHeight", "Line Height: " + editor.getLineHeight()).show(getPage());
+		//		});
+		//		layout.addComponent(getLineHeight);
 
 		setContent(layout);
 	}

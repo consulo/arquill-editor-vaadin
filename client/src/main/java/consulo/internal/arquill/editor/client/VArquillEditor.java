@@ -26,6 +26,7 @@ public class VArquillEditor extends Widget
 	private Map<String, JavaScriptObject> myRegisteredEvents = new HashMap<>();
 
 	protected ArquillEventListenerServerRpc myEventProxy;
+	protected ArquillEditorConnector myConnector;
 
 	public VArquillEditor()
 	{
@@ -50,7 +51,21 @@ public class VArquillEditor extends Widget
 		{
 			Window.alert("ArquillEditor not loaded");
 		}
-		myJsEditor = injectEditor(myId);
+
+		if(myJsEditor == null)
+		{
+			myJsEditor = injectEditor(myId, myConnector.getState().text);
+		}
+	}
+
+	@Override
+	protected void onUnload()
+	{
+		if(myJsEditor != null)
+		{
+			myJsEditor.uninstall();
+			myJsEditor = null;
+		}
 	}
 
 	public Set<String> getRegisteredEvents()
@@ -90,13 +105,19 @@ public class VArquillEditor extends Widget
 		return myJsEditor != null ? myJsEditor.getLineHeight() : 0;
 	}
 
+	public JsEditor getJsEditor()
+	{
+		return myJsEditor;
+	}
+
 	private static native boolean isLibraryLoad() /*-{
 		return $wnd.arquillEditor;
 	}-*/;
 
-	private static native JsEditor injectEditor(String id) /*-{
+	private static native JsEditor injectEditor(String id, String text) /*-{
 		var editor = $wnd.arquillEditor.createEditor({
-			parent: id
+			parent: id,
+			contents: text
 		});
 
 		return editor;

@@ -21,8 +21,7 @@ public abstract class JsEventProcessor
 			@Override
 			public void call(JsEditor editor, JsEvent event, ArquillEventListenerServerRpc rpc)
 			{
-				int offset = editor.getOffset(event.getX(), event.getY());
-				rpc.onMouseDown(offset);
+				rpc.onMouseDown(editor.getCaretOffset());
 			}
 		});
 	}

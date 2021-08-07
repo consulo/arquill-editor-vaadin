@@ -10,4 +10,6 @@ public interface ArquillClientRpc extends ClientRpc
 {
 	// will send from client info about view
 	void queueUpdate();
+
+	void setCaretOffset(int offset);
 }

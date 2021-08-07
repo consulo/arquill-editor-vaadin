@@ -1,8 +1,10 @@
 package consulo.internal.arquill.editor.client;
 
+import com.vaadin.client.annotations.OnStateChange;
 import com.vaadin.client.communication.StateChangeEvent;
 import com.vaadin.client.ui.AbstractComponentConnector;
 import com.vaadin.shared.ui.Connect;
+import consulo.internal.arquill.editor.client.js.JsEditor;
 import consulo.internal.arquill.editor.server.ArquillEditor;
 import consulo.internal.arquill.editor.shared.ArquillClientRpc;
 import consulo.internal.arquill.editor.shared.ArquillEditorState;
@@ -37,6 +39,7 @@ public class ArquillEditorConnector extends AbstractComponentConnector implement
 
 		VArquillEditor widget = getWidget();
 		widget.myEventProxy = getRpcProxy(ArquillEventListenerServerRpc.class);
+		widget.myConnector = this;
 	}
 
 	@Override
@@ -73,8 +76,6 @@ public class ArquillEditorConnector extends AbstractComponentConnector implement
 
 		VArquillEditor widget = getWidget();
 
-		widget.setText(getState().text);
-
 		Set<String> currentRegisteredEvents = new HashSet<>(widget.getRegisteredEvents());
 
 		Set<String> newEvents = getState().events;
@@ -93,6 +94,14 @@ public class ArquillEditorConnector extends AbstractComponentConnector implement
 		}
 	}
 
+	@OnStateChange("text")
+	private void onTextChanged()
+	{
+		VArquillEditor widget = getWidget();
+
+		widget.setText(getState().text);
+	}
+
 	@Override
 	public void queueUpdate()
 	{
@@ -101,5 +110,14 @@ public class ArquillEditorConnector extends AbstractComponentConnector implement
 		float lineHeight = widget.getLineHeight();
 
 		getRpcProxy(ArquillServerRpc.class).update(lineHeight);
+	}
+
+	@Override
+	public void setCaretOffset(int offset)
+	{
+		VArquillEditor widget = getWidget();
+
+		JsEditor jsEditor = widget.getJsEditor();
+		jsEditor.setCaretOffset(offset);
 	}
 }

@@ -6,6 +6,7 @@ import com.vaadin.shared.Registration;
 import com.vaadin.ui.AbstractComponent;
 import consulo.internal.arquill.editor.server.event.MouseDownEvent;
 import consulo.internal.arquill.editor.server.event.MouseDownListener;
+import consulo.internal.arquill.editor.shared.ArquillClientRpc;
 import consulo.internal.arquill.editor.shared.ArquillEditorState;
 import consulo.internal.arquill.editor.shared.ArquillEventListenerServerRpc;
 import consulo.internal.arquill.editor.shared.ArquillEventName;
@@ -30,6 +31,11 @@ public class ArquillEditor extends AbstractComponent
 				fireEvent(new MouseDownEvent(ArquillEditor.this, textOffset));
 			}
 		}, ArquillEventListenerServerRpc.class);
+	}
+
+	public void setCaretOffset(int offset)
+	{
+		getRpcProxy(ArquillClientRpc.class).setCaretOffset(offset);
 	}
 
 	public Registration addMouseDownListener(MouseDownListener listener)
@@ -57,8 +63,8 @@ public class ArquillEditor extends AbstractComponent
 		return getState().text;
 	}
 
-	public void setText(String text)
+	public void setText(String initialText)
 	{
-		getState().text = text;
+		getState().text = initialText;
 	}
 }

@@ -40,4 +40,16 @@ public final class JsEditor extends JavaScriptObject
 	public native float getLineHeight() /*-{
 		return this.getTextView().getLineHeight();
 	}-*/;
+
+	public native int getCaretOffset() /*-{
+		return this.getTextView().getCaretOffset();
+	}-*/;
+
+	public native void setCaretOffset(int offset)/*-{
+		return this.getTextView().setCaretOffset(offset);
+	}-*/;
+
+	public native void uninstall() /*-{
+		return this.uninstall();
+	}-*/;
 }
