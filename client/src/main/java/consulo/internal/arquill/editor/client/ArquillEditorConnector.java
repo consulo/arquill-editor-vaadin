@@ -1,13 +1,13 @@
 package consulo.internal.arquill.editor.client;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.client.communication.StateChangeEvent;
 import com.vaadin.client.ui.AbstractComponentConnector;
 import com.vaadin.shared.ui.Connect;
 import consulo.internal.arquill.editor.server.ArquillEditor;
+import consulo.internal.arquill.editor.shared.ArquillClientRpc;
 import consulo.internal.arquill.editor.shared.ArquillEditorState;
 import consulo.internal.arquill.editor.shared.ArquillEventListenerServerRpc;
+import consulo.internal.arquill.editor.shared.ArquillServerRpc;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,8 +17,13 @@ import java.util.Set;
  * @since 03/12/2020
  */
 @Connect(ArquillEditor.class)
-public class ArquillEditorConnector extends AbstractComponentConnector
+public class ArquillEditorConnector extends AbstractComponentConnector implements ArquillClientRpc
 {
+	public ArquillEditorConnector()
+	{
+		registerRpc(ArquillClientRpc.class, this);
+	}
+
 	@Override
 	public VArquillEditor getWidget()
 	{
@@ -26,11 +31,12 @@ public class ArquillEditorConnector extends AbstractComponentConnector
 	}
 
 	@Override
-	protected Widget createWidget()
+	protected void init()
 	{
-		VArquillEditor widget = GWT.create(VArquillEditor.class);
+		super.init();
+
+		VArquillEditor widget = getWidget();
 		widget.myEventProxy = getRpcProxy(ArquillEventListenerServerRpc.class);
-		return widget;
 	}
 
 	@Override
@@ -85,5 +91,15 @@ public class ArquillEditorConnector extends AbstractComponentConnector
 		{
 			widget.unregisterEvent(event);
 		}
+	}
+
+	@Override
+	public void queueUpdate()
+	{
+		VArquillEditor widget = getWidget();
+
+		float lineHeight = widget.getLineHeight();
+
+		getRpcProxy(ArquillServerRpc.class).update(lineHeight);
 	}
 }

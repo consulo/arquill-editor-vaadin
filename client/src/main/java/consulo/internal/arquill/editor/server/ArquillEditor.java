@@ -6,9 +6,9 @@ import com.vaadin.shared.Registration;
 import com.vaadin.ui.AbstractComponent;
 import consulo.internal.arquill.editor.server.event.MouseDownEvent;
 import consulo.internal.arquill.editor.server.event.MouseDownListener;
-import consulo.internal.arquill.editor.shared.ArquillEventName;
 import consulo.internal.arquill.editor.shared.ArquillEditorState;
 import consulo.internal.arquill.editor.shared.ArquillEventListenerServerRpc;
+import consulo.internal.arquill.editor.shared.ArquillEventName;
 
 /**
  * @author VISTALL

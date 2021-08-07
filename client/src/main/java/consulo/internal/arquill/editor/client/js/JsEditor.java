@@ -36,4 +36,8 @@ public final class JsEditor extends JavaScriptObject
 	public native int getOffset(int x, int y) /*-{
 		return this.getTextView().getOffsetAtLocation(x, y);
 	}-*/;
+
+	public native float getLineHeight() /*-{
+		return this.getTextView().getLineHeight();
+	}-*/;
 }

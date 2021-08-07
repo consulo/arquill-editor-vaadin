@@ -85,6 +85,11 @@ public class VArquillEditor extends Widget
 		}
 	}
 
+	public float getLineHeight()
+	{
+		return myJsEditor != null ? myJsEditor.getLineHeight() : 0;
+	}
+
 	private static native boolean isLibraryLoad() /*-{
 		return $wnd.arquillEditor;
 	}-*/;

@@ -35,6 +35,11 @@ public class DemoUI extends UI
 		editor.setWidth("100%");
 		editor.setHeight("100%");
 
+//		Button getLineHeight = new Button("Get Line Height", (e) -> {
+//			new Notification("GetLineHeight", "Line Height: " + editor.getLineHeight()).show(getPage());
+//		});
+//		layout.addComponent(getLineHeight);
+
 		setContent(layout);
 	}
 }
