@@ -26,6 +26,7 @@ public class DemoUI extends UI
 		layout.setWidth("100%");
 
 		ArquillEditor editor = new ArquillEditor("test");
+		editor.addMouseDownListener(event -> new Notification("MouseDown", "Offset: " + event.getTextOffset()).show(getPage()));
 
 		layout.addComponent(editor);
 
