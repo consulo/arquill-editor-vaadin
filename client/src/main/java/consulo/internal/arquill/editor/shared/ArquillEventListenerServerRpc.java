@@ -8,5 +8,5 @@ import com.vaadin.shared.communication.ServerRpc;
  */
 public interface ArquillEventListenerServerRpc extends ServerRpc
 {
-	void onMouseDown(int textOffset);
+	void onMouseDown(int textOffset, int button, int x, int y);
 }

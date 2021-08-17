@@ -54,7 +54,9 @@ public class DemoUI extends UI
 			});
 		});
 
-		editor.addMouseDownListener(event -> new Notification("MouseDown", "Offset: " + event.getTextOffset()).show(getPage()));
+		editor.addMouseDownListener(event -> {
+			new Notification("MouseDown", "Offset: " + event.getTextOffset() + ", button: " + event.getButton()).show(getPage());
+		});
 
 		layout.addComponent(editor);
 

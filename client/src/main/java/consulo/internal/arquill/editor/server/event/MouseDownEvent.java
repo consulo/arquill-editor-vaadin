@@ -9,11 +9,32 @@ import com.vaadin.ui.Component;
 public class MouseDownEvent extends Component.Event
 {
 	private final int myTextOffset;
+	private final int myButton;
+	private final int myX;
+	private final int myY;
 
-	public MouseDownEvent(Component source, int textOffset)
+	public MouseDownEvent(Component source, int textOffset, int button, int x, int y)
 	{
 		super(source);
 		myTextOffset = textOffset;
+		myButton = button;
+		myX = x;
+		myY = y;
+	}
+
+	public int getButton()
+	{
+		return myButton;
+	}
+
+	public int getX()
+	{
+		return myX;
+	}
+
+	public int getY()
+	{
+		return myY;
 	}
 
 	public int getTextOffset()

@@ -36,6 +36,7 @@ public class VArquillEditor extends Widget
 	public VArquillEditor()
 	{
 		Element pre = DOM.createElement("pre");
+		pre.setAttribute("oncontextmenu", "return false;");
 		pre.getStyle().setMargin(0, Style.Unit.PX);
 		pre.getStyle().setPadding(0, Style.Unit.PX);
 

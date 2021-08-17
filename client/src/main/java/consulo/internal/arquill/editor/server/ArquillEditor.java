@@ -31,9 +31,9 @@ public class ArquillEditor extends AbstractComponent
 		registerRpc(new ArquillEventListenerServerRpc()
 		{
 			@Override
-			public void onMouseDown(int textOffset)
+			public void onMouseDown(int textOffset, int button, int x, int y)
 			{
-				fireEvent(new MouseDownEvent(ArquillEditor.this, textOffset));
+				fireEvent(new MouseDownEvent(ArquillEditor.this, textOffset, button, x, y));
 			}
 		}, ArquillEventListenerServerRpc.class);
 	}

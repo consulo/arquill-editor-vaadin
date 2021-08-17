@@ -23,7 +23,7 @@ public abstract class JsEventProcessor
 			{
 				int offset = editor.getOffset(event.getX(), event.getY());
 				// dont use editor.getCaretOffset() because, editor not change position at this moment
-				rpc.onMouseDown(offset);
+				rpc.onMouseDown(offset, event.getMouseButton(), event.getX(), event.getY());
 			}
 		});
 	}

@@ -19,4 +19,8 @@ public final class JsEvent extends JavaScriptObject
 	public native int getY()/*-{
 		return this.y;
 	}-*/;
+
+	public native int getMouseButton()/*-{
+		return this.event.button;
+	}-*/;
 }
