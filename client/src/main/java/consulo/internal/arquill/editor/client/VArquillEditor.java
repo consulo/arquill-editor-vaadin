@@ -2,11 +2,14 @@ package consulo.internal.arquill.editor.client;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Style;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import consulo.internal.arquill.editor.client.js.JsEditor;
+import consulo.internal.arquill.editor.client.js.JsEditorAnnotation;
 import consulo.internal.arquill.editor.client.js.JsEventProcessor;
 import consulo.internal.arquill.editor.shared.ArquillEventListenerServerRpc;
 
@@ -24,6 +27,8 @@ public class VArquillEditor extends Widget
 	private JsEditor myJsEditor;
 
 	private Map<String, JavaScriptObject> myRegisteredEvents = new HashMap<>();
+
+	private Map<Integer, JsEditorAnnotation> myAnnotations = new HashMap<>();
 
 	protected ArquillEventListenerServerRpc myEventProxy;
 	protected ArquillEditorConnector myConnector;
@@ -108,6 +113,40 @@ public class VArquillEditor extends Widget
 	public JsEditor getJsEditor()
 	{
 		return myJsEditor;
+	}
+
+	public void addAnnotation(int annotationId, int startOffset, int endOffset, String type, Map<String, String> cssProperties)
+	{
+		if(myJsEditor == null)
+		{
+			Window.alert("editor is null");
+			return;
+		}
+		
+		JSONObject cssPropertiesJson = new JSONObject();
+		for(Map.Entry<String, String> entry : cssProperties.entrySet())
+		{
+			cssPropertiesJson.put(entry.getKey(), new JSONString(entry.getValue()));
+		}
+
+		JsEditorAnnotation annotation = myJsEditor.addAnnotation(startOffset, endOffset, type, cssPropertiesJson.getJavaScriptObject());
+
+		myAnnotations.put(annotationId, annotation);
+	}
+
+	public void removeAnnotation(int annotationId)
+	{
+		if(myJsEditor == null)
+		{
+			Window.alert("editor is null");
+			return;
+		}
+
+		JsEditorAnnotation annotation = myAnnotations.remove(annotationId);
+		if(annotation != null)
+		{
+			myJsEditor.removeAnnotation(annotation);
+		}
 	}
 
 	private static native boolean isLibraryLoad() /*-{

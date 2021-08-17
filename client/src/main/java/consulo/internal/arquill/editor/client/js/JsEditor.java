@@ -12,6 +12,29 @@ public final class JsEditor extends JavaScriptObject
 	{
 	}
 
+	public native JsEditorAnnotation addAnnotation(int startOffset, int endOffset, String type, JavaScriptObject rangeStyles) /*-{
+		var model = this.getAnnotationModel();
+
+		var annotation = {
+			start: startOffset,
+			end: endOffset,
+			type: type,
+			rangeStyle: {
+				style: rangeStyles
+			}
+		};
+
+		model.addAnnotation(annotation);
+
+		return annotation;
+	}-*/;
+
+	public native void removeAnnotation(JsEditorAnnotation annotation) /*-{
+		var model = this.getAnnotationModel();
+
+		model.removeAnnotation(annotation);
+	}-*/;
+
 	public native JavaScriptObject addListener(String name, JsEventConsumer eventConsumer) /*-{
 		var textView = this.getTextView();
 		var listener = function(e)

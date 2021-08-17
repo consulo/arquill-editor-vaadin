@@ -12,6 +12,7 @@ import consulo.internal.arquill.editor.shared.ArquillEventListenerServerRpc;
 import consulo.internal.arquill.editor.shared.ArquillServerRpc;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -119,5 +120,17 @@ public class ArquillEditorConnector extends AbstractComponentConnector implement
 
 		JsEditor jsEditor = widget.getJsEditor();
 		jsEditor.setCaretOffset(offset);
+	}
+
+	@Override
+	public void addAnnotation(int annotationId, int startOffset, int endOffset, String type, Map<String, String> cssProperties)
+	{
+		getWidget().addAnnotation(annotationId, startOffset, endOffset, type, cssProperties);
+	}
+
+	@Override
+	public void removeAnnotation(int annotationId)
+	{
+		getWidget().removeAnnotation(annotationId);
 	}
 }

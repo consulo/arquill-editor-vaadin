@@ -10,6 +10,9 @@ import com.vaadin.ui.VerticalLayout;
 import consulo.internal.arquill.editor.server.ArquillEditor;
 
 import javax.servlet.annotation.WebServlet;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ForkJoinPool;
 
 @Theme("valo")
 public class DemoUI extends UI
@@ -30,6 +33,25 @@ public class DemoUI extends UI
 		ArquillEditor editor = new ArquillEditor("test 123456");
 		editor.addAttachListener(event -> {
 			editor.setCaretOffset(3);
+
+			Map<String, String> csses = new HashMap<>();
+			csses.put("color", "blue");
+			csses.put("fontWeight", "bold");
+			csses.put("textDecoration", "underline");
+
+			int annotationId = editor.addAnnotation(0, 4, "orion.annotation.info", csses);
+
+			ForkJoinPool.commonPool().execute(() -> {
+				try
+				{
+					Thread.sleep(10000L);
+				}
+				catch(InterruptedException e)
+				{
+				}
+
+				editor.removeAnnotation(annotationId);
+			});
 		});
 
 		editor.addMouseDownListener(event -> new Notification("MouseDown", "Offset: " + event.getTextOffset()).show(getPage()));
